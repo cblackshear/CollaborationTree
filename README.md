@@ -1,3 +1,4 @@
+
 # Collaboration Tree
 
 The tree visualizes University of Mississippi Medical Center's educational hierarchy with end node containing the contact person for that department. 
