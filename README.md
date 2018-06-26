@@ -37,6 +37,7 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     ```
 	##### Data Frame: 
     ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/dataframe.PNG)
+	
     - Convert the wide data in each row of the CSV file to long format having two columns `level_num` and `node_name`, not including           `contact_name` column from CSV file.
     
     ```R
@@ -62,7 +63,8 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     cc <- (complete.cases(treeH$level_num,treeH$node_name))
     treeH <- treeH[cc,]
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step1.PNG)
+	
     - Adding a `parent_name` column which will show the parent node at each level.
     
     ```R
@@ -82,6 +84,7 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
       }
     }
     ```
+	![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step2.PNG)
     
     - Create a contingency table with `parent_name` and `node_name` and filtering results having frequency >=1.
     
@@ -91,7 +94,8 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     colnames(treeFinalnew) <- c('parent_name','node_name','value')
     treeFinalnew <- treeFinalnew[,c(2,1,3)]
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step3.PNG)
+	
     - To get the contact name that we left in the first step, we need to merge by `node_name` (contains email_id) in the filtered.             results of contingency table with `email_id` in CSV file (just include `email_id` and `contact_name` columns from CSV file).
     
     ```R
@@ -101,7 +105,8 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     #adding the node_name to dataframe by merging with raw data (just cols email_id and conatact_name) by email_id and node_name
     treeFinalnewMerged <- merge(treeFinalnew,DataSubset, by.x = c("node_name"), by.y = c("email_id"), all.x = T)
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step4.PNG)
+	
     - In merged results, renaming column `contact_name` to `email_id` if `node_name` column contains email_id then put it in column           `email_id` and If column `email_id` contains contact_name then put it in `node_name`.
     
     ```R
@@ -121,7 +126,8 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     }
     }
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step5.PNG)
+	
     - Finally convert the dataframe into json format using d3_json function from d3r library in R. 
     
     ```R
@@ -129,7 +135,8 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     library(d3r)
     d3_json(treeFinalnewMerged)
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step6.PNG)
+	
     - Pass the json data into the index.html file.
 ------
 
