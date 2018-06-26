@@ -135,8 +135,6 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     library(d3r)
     d3_json(treeFinalnewMerged)
     ```
-    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/step6.PNG)
-	
     - Pass the json data into the index.html file.
 ------
 
