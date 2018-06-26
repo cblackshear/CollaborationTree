@@ -35,7 +35,7 @@ This tree is developed by University of Mississippi Medical Center's Biostatisti
     #loading data
     Data <- read.csv('data/tree.csv', stringsAsFactors = FALSE)
     ```
-    
+    ![alt text](https://github.com/radhikesh/CollaborationTree/blob/master/images/dataframe.PNG)
     - Convert the wide data in each row of the CSV file to long format having two columns `level_num` and `node_name`, not including           `contact_name` column from CSV file.
     
     ```R
