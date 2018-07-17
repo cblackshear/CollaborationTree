@@ -3,9 +3,18 @@
 <html lang = "en">
 
 <head>
+      <meta charset="utf-8">
+
+
+
+  <link  rel="stylesheet" href="https://assets-cdn.github.com/assets/frameworks-73f533b7cc08a9d040e601cfd38fa585.css">
+ 
+
+  <meta name="viewport" content="width=device-width">
   
-  <meta charset = "utf-8">
-  <title>Data Science Collaborative Network</title>
+
+
+  <meta name="viewport" content="width=device-width">
   <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -94,7 +103,35 @@ a:hover {
 color: #000099;
 text-decoration:underline;
 }
-
+.file .readme .markdown-body {
+    padding: 45px;
+    border: 0;
+    border-radius: 0;
+}
+.readme .markdown-body, .readme .plain {
+    padding: 45px;
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.markdown-body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    color: #24292e;
+    background-color: #fff;
+}
+.markdown-body .highlight {
+    margin-bottom: 16px;
+}
   </style>
 
 </head>
@@ -155,7 +192,7 @@ text-decoration:underline;
 					<ul>
 					<li>Loading required libraries and dataset</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+					<!--<pre class="prettyprint"><code class="language-r">
 					# loading libraries
 					library(magrittr)
 					library(stringr)
@@ -166,7 +203,17 @@ text-decoration:underline;
 					# loading data
 					Data <- read.csv('data/tree.csv', stringsAsFactors = FALSE)
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-c"><span class="pl-c">#</span>loading libraries</span>
+library(<span class="pl-smi">magrittr</span>)
+library(<span class="pl-smi">stringr</span>)
+library(<span class="pl-smi">forcats</span>)
+library(<span class="pl-smi">plotly</span>)
+library(<span class="pl-smi">scales</span>)
+library(<span class="pl-smi">tidyverse</span>)
+
+<span class="pl-c"><span class="pl-c">#</span>loading data</span>
+<span class="pl-smi">Data</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">'</span>data/tree.csv<span class="pl-pds">'</span></span>, <span class="pl-v">stringsAsFactors</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>)</pre></div>
 					<br>
 					<h4>Below is the Data Frame Structure:</h4>
 					<img src="images/dataframe.PNG" alt="Alt Text" title=""/>
@@ -174,7 +221,7 @@ text-decoration:underline;
 					<br>
 					<li>Convert the wide data in each row of the CSV file to long format having two columns <code>level_num</code> and <code>node_name</code>, not including <code>contact_name</code> column from CSV file.</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+				<!-- 	<pre class="prettyprint"><code class="language-r">
 					# conveting wide data into long format:
 					treeH <- data.frame(matrix(data=NA,nrow=nrow(Data)*4,ncol=2))
 					colnames(treeH) <- c('level_num','node_name')
@@ -197,7 +244,28 @@ text-decoration:underline;
 					cc <- (complete.cases(treeH$level_num,treeH$node_name))
 					treeH <- treeH[cc,]
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-c"><span class="pl-c">#</span>conveting wide data into long format:</span>
+<span class="pl-smi">treeH</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-k">matrix</span>(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-c1">NA</span>,<span class="pl-v">nrow</span><span class="pl-k">=</span>nrow(<span class="pl-smi">Data</span>)<span class="pl-k">*</span><span class="pl-c1">4</span>,<span class="pl-v">ncol</span><span class="pl-k">=</span><span class="pl-c1">2</span>))
+colnames(<span class="pl-smi">treeH</span>) <span class="pl-k">&lt;-</span> c(<span class="pl-s"><span class="pl-pds">'</span>level_num<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>node_name<span class="pl-pds">'</span></span>)
+
+<span class="pl-v">j</span><span class="pl-k">=</span><span class="pl-c1">1</span>
+
+<span class="pl-k">for</span> ( <span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span>nrow(<span class="pl-smi">Data</span>)) {
+  <span class="pl-v">t</span><span class="pl-k">=</span><span class="pl-c1">0</span>
+  <span class="pl-k">for</span> (<span class="pl-smi">k</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>) {
+    <span class="pl-k">if</span> (<span class="pl-smi">Data</span>[<span class="pl-smi">i</span>,<span class="pl-smi">k</span>]<span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) {
+    <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">j</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">t</span> 
+    <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">j</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">Data</span>[<span class="pl-smi">i</span>,<span class="pl-smi">k</span>]
+    <span class="pl-smi">t</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">t</span><span class="pl-k">+</span><span class="pl-c1">1</span>
+    <span class="pl-smi">j</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">j</span><span class="pl-k">+</span><span class="pl-c1">1</span>
+    }
+  }
+}
+
+<span class="pl-c"><span class="pl-c">#</span> getting complete cases</span>
+<span class="pl-smi">cc</span> <span class="pl-k">&lt;-</span> (complete.cases(<span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>,<span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>))
+<span class="pl-smi">treeH</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span>[<span class="pl-smi">cc</span>,]</pre></div>
 					<br>
 					<h4>Data frame converted to wide format:</h4>
 					<img src="images/step1.PNG" alt="Alt Text" title=""/>
@@ -205,7 +273,7 @@ text-decoration:underline;
 					<br>
 					<li>Adding a <code>parent_name</code> column which will show the parent node at each level.</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+					<!-- <pre class="prettyprint"><code class="language-r">
 					treenew <- data.frame(matrix(data=NA,nrow=nrow(treeH),ncol=3))
 					colnames(treenew) <- c('level_num','parent_name','node_name')
 
@@ -222,7 +290,22 @@ text-decoration:underline;
 					  }
 					}
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-smi">treenew</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-k">matrix</span>(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-c1">NA</span>,<span class="pl-v">nrow</span><span class="pl-k">=</span>nrow(<span class="pl-smi">treeH</span>),<span class="pl-v">ncol</span><span class="pl-k">=</span><span class="pl-c1">3</span>))
+colnames(<span class="pl-smi">treenew</span>) <span class="pl-k">&lt;-</span> c(<span class="pl-s"><span class="pl-pds">'</span>level_num<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>parent_name<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>node_name<span class="pl-pds">'</span></span>)
+
+<span class="pl-k">for</span> (<span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span>nrow(<span class="pl-smi">treeH</span>)){
+  <span class="pl-k">if</span>(<span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">i</span>] <span class="pl-k">==</span> <span class="pl-c1">0</span>){
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">parent_name</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">'</span>No parent_name<span class="pl-pds">'</span></span>
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>]
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">i</span>]
+  }
+  <span class="pl-k">else</span> {
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">parent_name</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span><span class="pl-k">-</span><span class="pl-c1">1</span>]
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>]
+    <span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">treeH</span><span class="pl-k">$</span><span class="pl-smi">level_num</span>[<span class="pl-smi">i</span>]
+  }
+}</pre></div>
 					<br>
 					<h4>Added parent node name:</h4>
 					<img src="images/step2.PNG" alt="Alt Text" title=""/>
@@ -230,13 +313,17 @@ text-decoration:underline;
 					<br>
 					<li>Create a contingency table with <code>parent_name</code> and <code>node_name</code> and filtering results having frequency >=1.</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+				<!-- 	<pre class="prettyprint"><code class="language-r">
 					treeFinalnew <- data.frame(table(treenew$parent_name,treenew$node_name))
 					treeFinalnew <- subset(treeFinalnew, treeFinalnew$Freq >= 1)
 					colnames(treeFinalnew) <- c('parent_name','node_name','value')
 					treeFinalnew <- treeFinalnew[,c(2,1,3)]
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-smi">treeFinalnew</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(table(<span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">parent_name</span>,<span class="pl-smi">treenew</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>))
+<span class="pl-smi">treeFinalnew</span> <span class="pl-k">&lt;-</span> subset(<span class="pl-smi">treeFinalnew</span>, <span class="pl-smi">treeFinalnew</span><span class="pl-k">$</span><span class="pl-smi">Freq</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">1</span>)
+colnames(<span class="pl-smi">treeFinalnew</span>) <span class="pl-k">&lt;-</span> c(<span class="pl-s"><span class="pl-pds">'</span>parent_name<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>node_name<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>value<span class="pl-pds">'</span></span>)
+<span class="pl-smi">treeFinalnew</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">treeFinalnew</span>[,c(<span class="pl-c1">2</span>,<span class="pl-c1">1</span>,<span class="pl-c1">3</span>)]</pre></div>
 					<br>
 					<h4>Below is the contingency table:</h4>
 					<img src="images/step3.PNG" alt="Alt Text" title=""/>
@@ -244,7 +331,7 @@ text-decoration:underline;
 					<br>
 					<li>To get the contact name that we left in the first step, we need to merge by <code>node_name</code> (contains email_id) in the filtered results of contingency table with <code>email_id</code> in CSV file (just include <code>email_id</code> and <code>contact_name</code> columns from CSV file).</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+			<!-- 		<pre class="prettyprint"><code class="language-r">
 					DataSubset <- Data[,5:6]
 					# removing duplicated rows
 					DataSubset <- unique(DataSubset)
@@ -252,7 +339,12 @@ text-decoration:underline;
 					treeFinalnewMerged <- merge(treeFinalnew,DataSubset, by.x = c("node_name"), 
 					by.y = c("email_id"), all.x = T)
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-smi">DataSubset</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">Data</span>[,<span class="pl-c1">5</span><span class="pl-k">:</span><span class="pl-c1">6</span>]
+<span class="pl-c"><span class="pl-c">#</span>removing duplicated rows</span>
+<span class="pl-smi">DataSubset</span> <span class="pl-k">&lt;-</span> unique(<span class="pl-smi">DataSubset</span>)
+<span class="pl-c"><span class="pl-c">#</span>adding the node_name to dataframe by merging with raw data (just cols email_id and conatact_name) by email_id and node_name</span>
+<span class="pl-smi">treeFinalnewMerged</span> <span class="pl-k">&lt;-</span> merge(<span class="pl-smi">treeFinalnew</span>,<span class="pl-smi">DataSubset</span>, <span class="pl-v">by.x</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>node_name<span class="pl-pds">"</span></span>), <span class="pl-v">by.y</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>email_id<span class="pl-pds">"</span></span>), <span class="pl-v">all.x</span> <span class="pl-k">=</span> <span class="pl-c1">T</span>)</pre></div>
 					<br>
 					<h4>Added Contact name:</h4>
 					<img src="images/step4.PNG" alt="Alt Text" title=""/>
@@ -260,7 +352,7 @@ text-decoration:underline;
 					<br>
 					<li>In merged results, renaming column <code>contact_name</code> to <code>email_id</code> if <code>node_name</code> column contains email_id then put it in column <code>email_id</code> and If column <code>email_id</code> contains contact_name then put it in <code>node_name</code>.</li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+				<!-- 	<pre class="prettyprint"><code class="language-r">
 					# renaming contact_name as email_id
 					names(treeFinalnewMerged)[4] <- 'email_id'
 
@@ -278,7 +370,22 @@ text-decoration:underline;
 					}
 					}
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-c"><span class="pl-c">#</span> renaming contact_name as email_id</span>
+names(<span class="pl-smi">treeFinalnewMerged</span>)[<span class="pl-c1">4</span>] <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">'</span>email_id<span class="pl-pds">'</span></span>
+
+<span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">node_name</span> <span class="pl-k">&lt;-</span> as.character(<span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>)
+
+<span class="pl-c"><span class="pl-c">#</span>replacing the names in node_name with actual contact_name and email in email_id with actual email</span>
+<span class="pl-k">for</span> (<span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span>nrow(<span class="pl-smi">treeFinalnewMerged</span>)) {
+<span class="pl-k">if</span> (<span class="pl-k">!</span>is.na(<span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">email</span>[<span class="pl-smi">i</span>])) {
+
+  <span class="pl-smi">x</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">email</span>[<span class="pl-smi">i</span>]
+  <span class="pl-smi">y</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>]
+  <span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">node_name</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">x</span>
+  <span class="pl-smi">treeFinalnewMerged</span><span class="pl-k">$</span><span class="pl-smi">email_id</span>[<span class="pl-smi">i</span>] <span class="pl-k">&lt;-</span> <span class="pl-smi">y</span>
+}
+}</pre></div>
 					<br>
 					<h4>Below is the final data frame structure:</h4>
 					<img src="images/step5.PNG" alt="Alt Text" title=""/>
@@ -286,12 +393,15 @@ text-decoration:underline;
 					<br>
 					<li>Finally convert the dataframe into json format using d3_json function from d3r library in R. </li>
 					<br>
-					<pre class="prettyprint"><code class="language-r">
+					<!-- <pre class="prettyprint"><code class="language-r">
 					 # converting the data into json format
 					library(d3r)
 					d3_json(treeFinalnewMerged)
 					</code>
-					</pre>
+					</pre> -->
+					<div class="highlight highlight-source-r"><pre><span class="pl-c"><span class="pl-c">#</span>converting the data into json format</span>
+library(<span class="pl-smi">d3r</span>)
+d3_json(<span class="pl-smi">treeFinalnewMerged</span>)</pre></div>
 					</ul>
 					</ul>
 					<hr>
@@ -301,7 +411,7 @@ text-decoration:underline;
 						<br>
 						<li><a href="https://stackoverflow.com/questions/17558649/d3-tree-layout-separation-between-nodes-using-nodesize"target="_blank">Stack overflow.</a></li>
 					</ul>
-					
+
             </div>
          
         </div>
